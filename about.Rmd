@@ -20,8 +20,8 @@ Hi!
 I'm Adam -- I like statistics, especially applied methods work to support strategic decision making.
 
 I work on epidemic forecasting with the CDC's [Center for Forecasting and Outbreak Analytics](https://www.cdc.gov/forecast-outbreak-analytics/index.html).
-Currently, I'm developing and applying the [`epidist`](https://github.com/epinowcast/epidist) package for estimating epidemiological delay distributions.
-I also support state-level modelling of [time-varying reproduction numbers](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) and [respiratory infection nowcasts](https://www.cdc.gov/resp-net/dashboard/index.html).
+Currently, I'm working on sub-state modelling of the [time-varying reproduction number](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) using generalized additive models.
+I am also developing and applying the [`epidist`](https://github.com/epinowcast/epidist) package for estimating epidemiological delay distributions.
 
 I completed my [PhD](https://github.com/athowes/thesis) "Bayesian spatio-temporal methods for small-area estimation of HIV indicators" at [Imperial College London](https://www.imperial.ac.uk/) supervised by [Seth Flaxman](https://sethrf.com/) and [Jeffrey Imai-Eaton](https://www.imperial.ac.uk/people/jeffrey.eaton).
 I was part of the [StatML CDT](https://statml.io/), [HIV Inference Group](https://hiv-inference.org/), and [Machine Learning & Global Health Network](https://mlgh.net/).

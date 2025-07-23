@@ -14,8 +14,12 @@ Hello.
 This page is the beginnings of a guide to working with me.
 I created it both to help us work together and to help me refine my processes.
 
+## Preferences
+
 ## Communication preferences
 
 ## Document review
 
 ## Code review
+
+## GitHub workflow
