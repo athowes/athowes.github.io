@@ -1,0 +1,268 @@
+---
+title: "Software integration testing for Bayesian models"
+description: |
+  Developing stochastic software that works
+author:
+  - name: Adam Howes
+    affiliation: Independent
+source_url: true
+date: 2024-09-15
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    self_contained: false
+preview: tests.png
+bibliography: citations.bib
+---
+
+I've recently been working on an software package called [`epidist`](https://epidist.epinowcast.org/).
+It's written in [R](https://www.r-project.org/), and implements models to estimate epidemiological delay distributions.
+One epidemiological delay is the time between an individual being infected with a virus, and developing symptoms for that infection.
+Rather than knowing about this delay for a single individual, we want to estimate the distribution of these times across a population.
+
+Delay distributions are important because they inform how we respond to infectious diseases.
+For example, delay distributions are a key input into [models](https://www.cdc.gov/cfa-modeling-and-forecasting/rt-estimates/index.html) for the effective reproduction number.
+However, sometimes the methods used to estimate delay distributions result in biases.
+In particular, they often fail to correctly take censoring and truncation into account [@charniga2024best; @park2024estimating].
+Although the details regarding these biases are not the focus of this blog post, I mention this background to explain why `epidist` exists, and that we hope its use can improve the accuracy of delay distribution estimates used for epidemic response.
+
+`epidist` uses [Bayesian inference](https://athowes.github.io/thesis/bayes-st.html#bayesian-statistics) to estimate model parameters via the [probabilistic programming](https://en.wikipedia.org/wiki/Probabilistic_programming) language (PPL) [Stan](https://mc-stan.org/).
+Unfortunately, Bayesian inference methods can be tricky to use (at least, this is what I tell myself).
+As such, it's important that Bayesian modelling software provided to users is thoroughly tested.
+Especially as some users may not be familiar with details of the methods.
+
+A particular challenge is that much of the code used for Bayesian modelling is stochastic.
+That means for a given input, there is no fixed output.
+Because we don't know exactly what to expect, this makes it more difficult to test and ensure that it's working correctly.
+
+This blog post contains two sections.
+The first catalogs some integration tests for Bayesian models, and likely requires relatively high context.
+The second gives my opinions at this stage of working on the project, and reflections on some of the broader issues.
+I imagine that this second section might be more broadly accessible, so please feel free to skip to it if you prefer!
+
+## Integration test examples for Bayesian software
+
+Software testing is "the act of checking whether software satisfies expectations".
+In an R package, you can do this using the [`testthat`](https://testthat.r-lib.org/) package.
+Each test has one or more statements like `expect_equal` or `expect_type`.
+If the expectation is not met, then the test throws an error, and you're warned that your software isn't working as expected.
+
+We use these tests within a [continuous integration and continuous delivery](https://en.wikipedia.org/wiki/CI/CD) (CI/CD) framework.
+New features are not added to the package unless they pass all tests.
+
+There are lots of different [types of tests](https://en.wikipedia.org/wiki/Software_testing#Categorization).
+The two that I'm familiar with are unit tests and integration tests.
+Unit tests are more low level, and usually performed on individual functions, whereas integration tests are higher level and verify that functions work well together.
+
+Here, I discuss the following integration-esque tests:
+
+1. The model code you've written is valid
+1. You can sample from the prior distribution as expected
+1. Markov chain Monte Carlo convergence
+1. Posterior recovery of simulated parameters
+1. Simulation-based calibration
+1. Prior predictive checks
+
+(The first four are included in `epidist`, and the later two are not.)
+
+### The model code you've written is valid
+
+A basic test of PPL code is that the model is valid and has no syntax errors.
+
+```r
+mod <- cmdstanr::cmdstan_model(
+  stan_file = cmdstanr::write_stan_file(stancode),
+  compile = FALSE
+)
+expect_true(mod$check_syntax())
+```
+
+This is an important test in any situation, but especially if you allow users to modify aspects of the PPL code, and those modifications are abstracted away from users.
+For example, `epidist` works by using the [`brms`](https://paul-buerkner.github.io/brms/) interface to generate Stan code according to a user's specifications (as well as `epidist`-specific chunks of code).
+
+### You can sample from the prior distribution as expected
+
+Another check we can perform is that the PPL code can correctly sample from the prior distribution.
+Stan is best thought of as a program for calculating the log-posterior, and statements like
+
+```
+x ~ normal(0, 1)
+```
+
+should be read as increments to the log-posterior rather than sampling statements.
+That said, by appropriate use of flags for the prior and likelihood, it is still possible to use Stan's No-U-Turn Sampler [NUTS; @hoffman2014no] algorithm to sample from the prior distribution.
+In `brms` this is made very easy with the `sample_prior` argument:
+
+```r
+set.seed(1)
+prior_samples <- epidist(
+  data = prep_obs, fn = brms::brm, sample_prior = "only", seed = 1
+)
+pred <- predict_delay_parameters(prior_samples)
+```
+
+Although so far, I do not have an elegant solution for generating samples from the prior distribution directly in R, the following code obtains the `brmsprior` object, and uses regular expressions to extract the parameters of the prior distribution, in order to sample from them in base R:
+
+```r
+prior <- epidist_prior(data = prep_obs, ...)
+param1 <- extract_normal_parameters_brms(prior[1, ])
+param2 <- extract_normal_parameters_brms(prior[2, ])
+samples1 <- rnorm(1000, mean = param1$mean, sd = param1$sd)
+samples2 <- exp(rnorm(1000, mean = param2$mean, sd = param2$sd))
+```
+
+To compare two sets of samples, we can use the [Kolmogorov-Smirnov](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test) (KS) test for the maximum difference between two empirical cumulative distribution functions:
+
+```r
+# suppressWarnings here used to prevent warnings about ties
+ks1 <- suppressWarnings(stats::ks.test(pred$mu, samples1))
+ks2 <- suppressWarnings(stats::ks.test(pred$sigma, samples2))
+testthat::expect_gt(ks1$p.value, 0.01)
+testthat::expect_gt(ks2$p.value, 0.01)
+```
+
+The code above performs two hypothesis tests, using a $p$-value threshold of 0.01.
+Importantly, this means that under the null hypothesis, each test will fail 1% of the time.
+And, with two tests, the probability that at least one fails is `r 100 * (1 - (0.99)^2)`%.
+This is a fundamental challenge with stochastic tests!
+
+(Although in this case tests on marginals are reasonable because the prior distributions are independent, more broadly you should consider a test on joint distributions.
+Here, I'd look into extensions of the KS test [@harrison2015validation], maximum mean discrepancy [@gretton2012kernel], or Pareto-smoothed importance sampling [@vehtari2015pareto].)
+
+### Markov chain Monte Carlo convergence
+
+Markov chain Mote Carlo (MCMC) methods like NUTS should only be used if the sampler has converged, by which we mean the Markov chain has reached its stationary distribution.
+A range of diagnostics [@roy2020convergence] have been developed to assess convergence.
+There are also diagnostics which are specific to NUTS.
+Here we perform three diagnostic tests:
+
+```r
+expect_convergence <- function(fit, per_dts, treedepth, rhat) {
+  diag <- epidist_diagnostics(fit)
+  expect_lt(diag$per_divergent_transitions, per_dts)
+  expect_lt(diag$max_treedepth, treedepth)
+  expect_lt(diag$max_rhat, rhat)
+}
+
+set.seed(1)
+fit <- epidist(data = prep_obs, seed = 1)
+expect_convergence(fit, 0.05, 10, 1.05)
+```
+
+Although there is stochasticity in the results of any MCMC diagnostic, I expect that the extent of variation depends heavily on the complexity of the posterior geometry.
+
+### Posterior recovery of simulation parameters
+
+If data are simulated from the model, and everything is working as expected, then the parameters used to simulate data should be able to be recovered by the inference procedure.
+For example, here we check that the posterior mean of the lognormal delay distribution recovers the underlying parameters up to a tolerance of 0.1 either way:
+
+```r
+set.seed(1)
+fit <- epidist(data = prep_obs, seed = 1)
+pred <- predict_delay_parameters(fit)
+expect_equal(mean(pred$mu), meanlog, tolerance = 0.1)
+expect_equal(mean(pred$sigma), sdlog, tolerance = 0.1)
+```
+
+An important question here is how this tolerance parameter should be set.
+Perhaps the quantity of data simulated could just be too low to reasonably estimate the parameter up to high precision.
+This type of consideration might push us towards simulating a lot of data, but that has costs in terms of computation.
+This is one example of running into a fundamental trade-off between "quality" (broadly interpreted) and time constraints.
+
+### Simulation-based calibration
+
+Simulation-based calibration [SBC; @talts2018validating] may be viewed as an extension to the above posterior recovery of simulation parameters.
+SBC work by simulating many data from the prior and performing inference for each.
+If the Bayesian inference procedure is working correctly, then each simulation parameter used should be distributed like a draw from the corresponding posterior.
+(For another explanation of this, see [the appendix](https://athowes.github.io/posts/2024-09-15-bayesian-tests/#appendix-another-way-to-understand-sbc) of this blog post!)
+This means that e.g. quantile-based tests of uniformity can be used (see say @sailynoja2022graphical).
+
+Doing SBC might be viable for a one-off analysis to be included in a paper, but (unless there is some easy way to compute the posterior without MCMC, say) it seems to me like far too much computation to be a viable test for e.g. CI/CD.
+This is a shame, because it's a neat idea!
+
+### Prior predictive checks
+
+Another test one could perform is to simulate data from the prior and check that it looks reasonable.
+In Bayesian workflow [@gelman2020bayesian] parlance this is called a prior predictive check (PPC).
+
+Although we do not include PPCs within our tests, we are using PPCs to set default prior distributions (which differ to those provided by `brms`).
+Currently, we have placed this documentation in a [frequently asked questions](https://epidist.epinowcast.org/articles/faq.html#how-did-you-choose-the-default-priors-for-epidist) vignette on the `epidist` website.
+Arguably, including PPCs in more formal testing might have the side benefit of forcing me to be more concrete about the requirements for the data "looking reasonable".
+(To perform the current PPC, I manually tuned the prior distributions until the data distribution looked about right.)
+
+## Broader issues
+
+### Stochastic test failures and reproducibility
+
+One can make a test reproducible by setting the stochastic seed used everywhere.
+However, as discussed above, that will not protect you from tests failing e.g. 1% of the time if you're setting a $p$-value of 0.01.
+In these cases, you might have to rerun tests to investigate the distribution of test failures: it should be that $p$-values are $\text{Unif}(0, 1)$ if the code is correct.
+Deviations from that distribution suggest that the code is more likely to be incorrect.
+I wonder whether something like this could be applied automatically.
+That is, stochastic tests are rerun adaptively upon failure (or success?) in order to test the rate of failure.
+
+### Coverage of user input options
+
+All code testing is limited by its coverage of the potential inputs.
+It appears to me that code for statistical modelling is on the "more difficult" end of this spectrum.
+
+The main modelling function in `epidist` takes a range of user input options.
+These include the data, the distributional family to be used for the delay distribution (e.g. lognormal), any formula to be used for the distributional parameters of the delay (e.g. `mu ~ 1` and `sigma ~ 1` for the lognormal), as well as any priors to override our chosen defaults.
+
+I would imagine that data is the most likely place for unusual inputs.
+In our integration tests, we currently use data simulated from the statistical model.
+This ($\mathcal{M}$-closed) setting is an absolute best case scenario, and not realistic.
+Likely we would benefit from including examples of real world data in our integration tests, alongside simulated data.
+
+Aside from the data, we must also make sensible choices about which choices of input setting to cover.
+Gratefully, although we provide options to set any^[With either a `stats::` or `brms::` family.] delay distribution family, I imagine that >90% of users will not change the default (lognormal).
+Hence (quite trivially) we should concentrate our limited (cognitive and computational efforts) on the most used settings.
+
+### Building capacity in user base through documentation
+
+Given the above difficulties in covering user options, it's inevitable that sometimes code is going to fail, or models will fail to converge and so on.
+I think this reason (among many others) is great justification for investing in good documentation, and otherwise building capacity in the user base.
+
+### The right place
+
+In writing this post, it's been interesting to think about the "right place" for certain types of work that build trust in methods to exist.
+Places might include, but not be limited to tests, documentation, vignettes, dashboards, papers.
+In particular, I wonder about gaps here.
+For example, above I mentioned that SBC is too long running to be suitable for CI/CD testing.
+However, I do think that knowing a method passes SBC-style tests would be of value.
+One place for this work would be a paper, but the obvious downside is that papers are static.
+Rather, I would suggest there might be a gap here for a living document that is re-run on e.g. a monthly or quarterly basis.
+I use the word "living" in reference to "living systematic reviews" (unsurprisingly, I also instinctively think static meta-analysis or systematic reviews are questionable!).
+
+### A note on the value
+
+Finally, I want to note that including these tests in `epidist` has already proved its worth to me.
+In implementing the gamma delay distribution model, testing showed that the simulation parameters were not being recovered and the model did not reach convergence.
+Getting this information this helped me to understand and quickly fix the issue (which was related to `brms` and Stan parameterising the gamma distribution differently!).
+`epidist` is yet to be released, but when we do hopefully have users, I will feel more confident recommending use of particular models knowing that at least some of these "necessary by not sufficient" conditions discussed above are met.
+
+#### Acknowledgements
+
+Thanks to Sam Abbott, Katelyn Gostic and Sang Woo Park for their collaboration on the `epidist` package.
+Thanks to Dylan Morris, Kaitlyn Johnson, and Damon Bayer for discussion of a draft of this post at the CDC CFA short-term forecasting lab meeting.
+
+## Appendix: Another way to understand SBC
+
+For a while I was confused about how SBC works.
+This explanation helped clear things up for me.
+
+Let $p(\theta, y)$ be the joint distribution of the data $y$ and the parameters $\theta$.
+There are two ways you could generate samples $(\tilde \theta, \tilde y) \sim p(\theta, y)$ from this joint distribution.
+
+1. You could sample from the prior on $\theta$ first $\tilde \theta_1 \sim p(\theta)$, and then sample from the likelihood $\tilde y_1 \sim p(y \, | \, \tilde \theta_1)$, such that $(\tilde \theta_1, \tilde y_1) \sim p(\theta, y)$.
+2. You could sample from the "prior" on $y$ first $\tilde y_2 \sim p(y)$, and then sample from the posterior distribution $\tilde \theta_2 \sim p(\theta \, | \, \tilde y_2)$, such that $(\tilde \theta_2, \tilde y_2) \sim p(\theta, y)$.
+
+Both will generate samples from the joint distribution $p(\theta, y)$.
+This implies that if you look at the parameter draws from procedure one $\{ \tilde \theta_1\}$ and the parameter draws from procedure two $\{ \tilde \theta_2\}$ then they have the same distribution.
+
+The samples of $\theta$ from procedure one are simply from the prior, and the samples of $\theta$ from procedure two are from what @talts2018validating refer to as the "data-averaged posterior" (DAP).
+The posterior is "data-averaged" because it involves taking samples over $p(y)$.
+Importantly, procedure two involves sampling from a posterior distribution.
+Therefore, the samples will only be the same if you are able to generate exact samples from the posterior distribution; in other words, if Bayesian inference is exact.
+It's this fact which SBC uses to create a procedure for checking implementation and accuracy of a given approximate Bayesian inference method.

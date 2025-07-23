@@ -1,0 +1,59 @@
+---
+title: "Representing uncertainty using significant figures"
+description: |
+  We forecast 43,279 new cases
+author:
+  - name: Adam Howes
+    affiliation: Imperial College London
+date: 2022-04-24
+preview: representing-uncertainty-using-significant-figures.jpg
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
+    self_contained: false
+---
+
+It's not uncommon for modellers to produce estimates written to many significant figures, despite the fact that these estimates are highly uncertain.
+They might be built on poor quality data, or even no data at all.
+This practice can lose credibility with consumers of statistics who -- rightly or wrongly -- consider significant figures to be a reflection of uncertainty^[From a Bayesian point of view we might claim that it's the posterior distribution which represents uncertainty, not how a point estimate happens to be written. However, I'm sure we are all guilty of foregrounding point estimates when communicating results on occasion.].
+
+For example, suppose we wish to give a point estimate $\hat \theta$ of some parameter.
+One way to represent uncertainty is the number of significant figures that $\hat \theta$ is displayed to.
+For example, supposing you told me a number was 1000, then I'd have a idea about the precision you're talking about
+That idea would be different to if you had told me that the number was 1100, 1140, 1144 or 1144.3.
+
+If $\hat \theta$ is displayed to $n$ significant figures, then we might suppose that our brains construct pseduo-credible intervals for $\theta$ given by $[L_n, U_n]$ which narrow as $n$ grows larger.
+I'd be interested to find out if any psychological research has been done into this landscape.
+For example, how does the credible interval size $U_n - L_n$ vary with $n$?
+To what extent does perception of uncertainty vary by individual, background or culture?
+
+Given an understanding of this landscape, are there any thought-out guidelines on how we should use significant figures to communicate uncertainty?
+Such a representation of uncertainty will have limitations as compared with a credible interval $[L, U]$:
+
+1. For each point estimate $\hat \theta$ only a small number of possible pseudo-credible intervals $[L_n, U_n]$ are possible.
+2. There is no way to represent asymmetric uncertainty.
+3. If $\hat \theta$ happens to be followed by many zeros even when a high number of significant figures are used, then it will mistakenly be interpreted as having high uncertainty.
+
+Although in reality we are not limited to only providing a single point estimate with which to represent uncertainty, in spoken language it is rare to hear intervals.
+Instead, we often use words such as "about" or "roughly" -- though these words, like using significant figures, are very crude.
+
+In the text of a scientific paper, or an application developed to support academic work, we have the opportunity to present uncertainty as we wish.
+This might include a credible interval, though I worry about the extent to which this information may be ignored and more in some ways irrelevant information like the number of significant figures being focused on.
+Perhaps a practical recommendation might be to use both of these tools, and not restrict ourselves to one or the other, by providing point estimates and confidence intervals both rounded to a suitable number of significant figures.
+Even if some information is lost in this way, it is unlikely that policy would change significantly as a result of small changes to estimates.
+
+I got in touch with someone working at [UNAIDS](https://www.unaids.org/en) for their suggestion on how estimates should be displayed.
+They provided the following Excel formula:
+
+```
+IF(X > 1000000, ROUND(X, -5), IF(X > 100000, ROUND(X, -4), IF(X > 10000, ROUND(X, -3),
+IF(X > 1000, ROUND(X, -3), IF(X > 100, ROUND(X, -2), "<100")))))
+```
+
+With the warning that I'm not an Excel native, my understanding of this formula is that `ROUND(X, -n)` rounds to the nearest $10^n$, the result being to give most numbers to two significant figures, and any number under 100 is just presented as "<100"^[It was also suggested that words can be used to add clarity, e.g. 43 thousand instead of 43,279.].
+In practice, there isn't rounding here which adapts to the uncertainty.
+I can certainly imagine the benefit isn't worth the added complication, or another explanation could be that having measures of uncertainty for all estimates can't be relied upon.
+
+As a final note, I heard the book ["Making Numbers Count: The Art and Science of Communicating Numbers"](https://www.goodreads.com/en/book/show/58605460-making-numbers-count), and the concept of subitizing, mentioned on a recent More or Less episode which I think could be worth a read.
+I'd be interested if anyone has other recommendations in this space -- let me know!
