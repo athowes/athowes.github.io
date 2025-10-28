@@ -1,0 +1,33 @@
+---
+title: "About"
+bibliography: citations.bib
+title-block-banner: false
+---
+
+::: {.floatting}
+
+```{r}
+#| echo: false
+#| out-width: "30%"
+#| fig-align: "right"
+knitr::include_graphics("headshot.jpeg")
+```
+
+Hi!
+I'm Adam -- I like statistics, especially applied methods work to support strategic decision making.
+
+I work on epidemic forecasting with the CDC's [Center for Forecasting and Outbreak Analytics](https://www.cdc.gov/forecast-outbreak-analytics/index.html).
+Currently, I'm working on sub-state modelling of the [time-varying reproduction number](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) using generalized additive models.
+I am also developing and applying the [`epidist`](https://github.com/epinowcast/epidist) package for estimating epidemiological delay distributions.
+
+I completed my [PhD](https://github.com/athowes/thesis) "Bayesian spatio-temporal methods for small-area estimation of HIV indicators" at [Imperial College London](https://www.imperial.ac.uk/) supervised by [Seth Flaxman](https://sethrf.com/) and [Jeffrey Imai-Eaton](https://www.imperial.ac.uk/people/jeffrey.eaton).
+I was part of the [StatML CDT](https://statml.io/), [HIV Inference Group](https://hiv-inference.org/), and [Machine Learning & Global Health Network](https://mlgh.net/).
+I worked on comparing models for area-level spatial correlation, estimating district-level HIV risk group proportions [@howes2023spatio], and developing deterministic Bayesian inference methods [@howes2025fast] motivated by the [Naomi](https://naomi.unaids.org/login) small-area evidence synthesis model [@eaton2021naomi; @esra2024improved].
+
+I've also spent time at the [MIT Media Lab](https://www.media.mit.edu/groups/sculpting-evolution/overview/) contributing to the [Nucleic Acid Observatory](https://www.naobservatory.org/) project for detecting biological threats, and at the [University of Waterloo](https://uwaterloo.ca/statistics-and-actuarial-science/) working on deterministic Bayesian inference methods with [Alex Stringer](https://www.alexstringer.ca/).
+After my PhD, I worked at the [University of Oxford](https://www.ox.ac.uk/) modelling food security with the [WFP](https://www.wfp.org/) [@ishida2025realtime], and contributed to an [individual-based model](https://github.com/mrc-ide/helios) supporting [Blueprint Biosecurity](https://blueprintbiosecurity.org/)'s far UVC roadmap.
+
+For anyone in and around London, and interested in chatting statistics or other topics, let me know!
+I also welcome constructive feedback --  feel free to use this anonymous [form](https://forms.gle/VjXVx2JZAoSEMsSi8) if you'd like to share thoughts on how I can improve personally or professionally.
+
+:::
