@@ -1,0 +1,48 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Guide\"\n",
+        "bibliography: citations.bib\n",
+        "---\n",
+        "\n",
+        "```{css echo = FALSE}\n",
+        "#title-block-header {\n",
+        "    display: none;\n",
+        "}\n",
+        "```\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "If you're coming across this page, it's likely we are colleagues!\n",
+        "Hello.\n",
+        "This page is the beginnings of a guide to working with me.\n",
+        "I created it both to help us work together and to help me refine my processes.\n",
+        "\n",
+        "## Preferences\n",
+        "\n",
+        "## Communication preferences\n",
+        "\n",
+        "## Document review\n",
+        "\n",
+        "## Code review\n",
+        "\n",
+        "## GitHub workflow"
+      ],
+      "id": "d54a5b29"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

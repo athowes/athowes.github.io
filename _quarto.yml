@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Adam Howes"
+  description: "A blog vaguely related to statistics research."
+  site-url: https://athowes.github.io
+  favicon: headshot.jpeg
+  navbar:
+    right:
+      - text: "Blog"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Guide"
+        href: guide.qmd
+      - icon: envelope
+        href: mailto:ath19@ic.ac.uk
+      - icon: twitter
+        href: https://twitter.com/adamhowes
+      - icon: github
+        href: https://github.com/athowes
+      - icon: linkedin
+        href: https://linkedin.com/in/athowes
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-overflow: wrap

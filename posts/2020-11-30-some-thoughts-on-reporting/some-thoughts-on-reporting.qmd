@@ -1,0 +1,106 @@
+---
+title: "Some thoughts on reporting a (posterior) distribution"
+description: "In other words, spending too much time on Twitter"
+author: "Adam Howes"
+date: "2020-11-30"
+image: "some-thoughts-on-reporting.png"
+bibliography: citations.bib
+format:
+  html:
+    toc: true
+    code-copy: true
+---
+
+## Introduction
+
+There are many ways to report a distribution including point estimates, standard errors, confidence intervals, and distributional properties.
+Which of these should we use?
+Does it depend on the properties of the particular distribution, or how the information might be used?
+
+## What's the use?
+
+Suppose that -- after taking great care collecting data, designing a suitable model, and conducting inference -- I obtain a posterior distribution $p(\theta \, | \, y)$ for a parameter of interest $\theta$.
+Hopefully I went through all this effort because having informed beliefs about $\theta$, encapsulated by the posterior, is useful somehow.
+One way to interpret "useful" is that at the end of the day better knowledge cashes out in terms of better decision making according to some utility function $U(a, \theta)$.
+It could certainly be argued that such an interpretation of "useful" is too simplistic, but it’s what I’ll use here.
+In this setting, under the standard Bayesian decision theory framework where expected utility is calculated by integrating out uncertainty over $\theta$, anything less than the full posterior will result in worse decisions.
+
+If that’s the case, then what is the value in reporting summary statistics?
+Given this use-case, the most important thing for an author to include about their posterior might, for example, be a way to access their Markov chain draws (or a thinned version of them)!
+It’s clear that analysis is rarely as formal as that which I alluded to above.
+Often a reader will simply want to know the general story, without intending to use it in a formal cost benefit analysis.
+
+## Direct and indirect use-cases
+
+One way you could divide the possible use-cases is into direct and indirect applications.
+
+### Direct
+
+The posterior is directly used by some audience to inform decision making. The audience may be any combination of policy makers, the public, the media, businesses, affected communities, or many others.
+
+### Indirect
+
+The posterior is used indirectly as part of a further study in order to learn about another parameter of interest $\psi$ (which might then be used directly or feed into another study, and so on).
+Assuming the subsequent study about $\psi$ also takes a Bayesian approach, then my posterior $p(\theta \, | \, y)$ can be used as the prior on $\theta$.
+
+Note that, if there are many studies like mine, each of which with some posterior, then they can be aggregated mathematically using ideas from combining expert opinion (e.g. O’Hagan et al. 2006) to a single posterior.
+Perhaps this kind of formality is more likely in the indirect case, but is possible in either.
+
+In order for someone to use my posterior as a prior, it might be helpful for me to provide a (commonly implemented, for example something which is part of [Stan](https://mc-stan.org/)) parametric distribution matching my posterior.
+Is there some kind of service which when given either a sequence of Markov chain draws or a density estimate returns the “closest matching” common parametric distribution^[Thanks to Julius Hege for pointing out that the `FindDistribution` [function](https://reference.wolfram.com/language/ref/FindDistribution.html) from Wolfram does this, as well as other comments. I think it’s always going to be difficult to summarise a distribution this way, and that potentially this onus should not be placed on the user rather than the producer, in order to better suit their particular needs.︎]?
+
+Another consideration is that, in practice, you might not want to accept the posterior of a previous study without alteration.
+Instead you might flatten its distribution somewhat depending on how informative you intend it to be.
+Are there guidelines for doing this kind of thing, or is it mostly ad-hoc?
+
+## A tweet case-study
+
+This March, the @ferguson2020report report estimating the impact of particular non-pharmaceutical interventions on COVID-19 mortality and health demand received a large amount of media attention.
+In particular, the report gives point estimates for total deaths under various scenarios, calculated according to a simulation model.
+Under the "do nothing" scenario the total deaths are projected to be around 500,000 depending on the particular epidemiological parameters.
+
+My guess is that each entry in the Table 4 of the report is a Monte Carlo average of a number of simulations.
+I couldn’t find the what the distribution of possible outcomes under each scenario under the model looks like.
+It’s possible that there is very little variability in the simulation outcomes, in which case the choice to report a single figure seems reasonable.
+
+The 500,000 figure received wide criticism from "lock-down skeptics" who questioned Ferguson’s prior forecasting record.
+For example, here is Matt Ridley^[Note: you can embed tweets in RMarkdown documents using the `tweetrmd` package!]:
+
+```{r}
+#| echo: false
+#| eval: false
+tweetrmd::tweet_embed("https://twitter.com/mattwridley/status/1259898818017058818")
+```
+
+Putting aside any possible inaccuracies in the exact figures Ridley quotes, it’s not reasonable to judge a forecast by it’s worst-case scenario or upper confidence interval.
+Are misunderstandings like this a failure of statistical communication, or is there nothing that can be done to prevent those who wish to be misled, or to themselves mislead others, doing so?
+
+Philip Tetlock appears to accept on face-value the premise that Ferguson’s previous predictions are exaggerated:
+
+```{r}
+#| echo: false
+#| eval: false
+tweetrmd::tweet_embed("https://twitter.com/PTetlock/status/1260171266365030400")
+```
+
+Accepting these premises, my intuition is that long-term credibility outweighs short-term attention.
+On the assumption that Ferguson’s previous claims are strictly speaking not exaggerated, I think that an interesting question here is does it qualify as exaggeration to report the upper confidence interval of a heavy tailed distribution?
+
+```{r}
+#| echo: false
+#| eval: false
+tweetrmd::tweet_embed("https://twitter.com/nntaleb/status/1260537570724904961")
+```
+
+Nassim Taleb does not interpret anyone charitably here.
+He claims that each of Ferguson, Ridley and Tetlock are wrong: Ferguson to have produced point estimates (at all), Ridley to have judged point estimates and Tetlock for "promoting" Ridley’s interpretation.
+In my opinion, suggesting that we should "never" report point estimates for some distributions is in itself an exaggerated claim.
+
+## Conclusion
+
+The idea that we can somehow detach science from how its interpretation is appealing but possibly misguided.
+I believe aiming to report our inferences objectively is still a worthwhile goal, but we should be aware of the fact that our biases will inevitably seep though.
+
+As a final comment, this type of issue [came up](https://clearerthinkingpodcast.com/episode/013) in the context of interpreting climate change models recently on the Clearer Thinking podcast^[I’d also recommend the episode with [Michael Nielsen](https://clearerthinkingpodcast.com/episode/016) about scientific progress and political feedback loops. Statistics can be thought of as a branch of meta-science. This conversation made me think more explicitly about the role of statistics in accelerating scientific progress. How could we be doing things differently with this goal in mind?].
+One of the interviewees, Hank Racette, notes that the media are always going to "lead with their strongest headline".
+Although it is tempting to blame the media, we are all likely guilty of seeking surprise, on occasion, rather than more thoughtful, but perhaps dull, analysis.

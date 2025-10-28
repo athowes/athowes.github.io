@@ -1,0 +1,15 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/2024-09-15-bayesian-tests/bayesian-tests.html",
+      "/posts/2024-04-01-phd-advice/phd-advice.html",
+      "/posts/2024-04-11-naomi-aghq-retrospective/naomi-aghq-retrospective.html",
+      "/posts/2023-04-21-risk-group-retrospective/risk-group-retrospective.html",
+      "/posts/2022-04-24-staged-feedback-loops/staged-feedback-loops.html",
+      "/posts/2022-04-24-representing-uncertainty-using-significant-figures/representing-uncertainty-using-significant-figures.html",
+      "/posts/2020-11-30-some-thoughts-on-reporting/some-thoughts-on-reporting.html",
+      "/posts/2021-11-04-fast-disconnected-icar-in-stan/fast-disconnected-icar-in-stan.html"
+    ]
+  }
+]

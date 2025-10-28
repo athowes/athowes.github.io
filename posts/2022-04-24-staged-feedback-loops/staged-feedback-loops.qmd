@@ -1,0 +1,56 @@
+---
+title: "Staged feedback"
+description: "Algorithms to live by: multi-fidelity Bayesian optimisation"
+author: "Adam Howes"
+date: "2022-07-05"
+image: "staged-feedback-loops.jpeg"
+format:
+  html:
+    toc: true
+    code-copy: true
+---
+
+*Status: draft, last updated `r Sys.Date()`*
+
+[Bayesian optimisation](https://papers.nips.cc/paper/2012/hash/05311655a15b75fab86956663e1819cd-Abstract.html) is an algorithmic approach to finding the input which maximises an unknown function, aiming to use the fewest possible evaluations of that function.
+The algorithm works by choosing an input $x$ that might be good, evaluating it $y = f(x)$, then updating a model of the unknown function $f$ based on the result $y$.
+Then, a new input is chosen to evaluate based on the updated model, and so on.
+Typically the function can't be evaluated directly, and instead an [emulator](https://bobby.gramacy.com/surrogates/) which approximates the function must be used.
+Various emulators might be available, with different properties.
+For example, some may be fast and cheap but give noisy, biased responses, and others may be slow and costly but give precise, accurate responses.
+
+This set-up reminds me of the process of receiving feedback on an idea or product, which we would like to improve.
+The true quality of the idea is unknown, but we can learn about it by receiving feedback from others.
+We might receive feedback, tune the idea to improve it based on the feedback, then submit the idea for more feedback, and so on.
+There are many different avenues for recieving feedback with very different properties -- which probably cannot be just reduced to their statistical noise and bias properties.
+It might make sense to structure the ordering of how we recieve feedback 
+
+To give an example, in the [100th episode](https://clearerthinkingpodcast.com/episode/100) of the Clearer Thinking podcast, Spencer described how he improved the podcast by gathering feedback in stages: first from close friends, then interview guests, then listeners to the podcast.
+Or, when writing a scientific paper, feedback can be elicited from your supervisor, external collaborators, peer reviewers and hopefully eventually the wider scientific community.
+Before even thinking about writing a scientific paper, it might be a good idea to incubate your ideas gradually by say talking to a friend at lunch, writing a rough blog post or more polished forum post.
+
+Three properties which I think are strategically important when thinking about receiving feedback are: the costs of receiving feedback, the noise and bias of the feedback, and the stage at which the feedback "counts".
+
+## How much does it cost to get feedback?
+
+Sometimes querying different sources has different costs.
+If I have a question about a topic at work, I might prefer to ask a colleague of around similar seniority, rather than someone more senior, in part as I expect the more senior person's time to be of higher value.
+I might prefer to spend a few hours watching videos about squat form online, hopefully getting most of the way there, before hiring a personal trainer for a shorter session to fine-tune my technique.
+
+## How noisy or biased is the feedback?
+
+However, lower cost feedback is typically some combination of more noisy or more biased.
+Continuing the above examples, my colleagues might be less well placed to give accurate feedback than someone more senior.
+In the squat form case, watching videos online might ingrain incorrect bad habits early on, which may later be difficult to correct, even with the help of a personal trainer.
+
+## Does the feedback count?
+
+By feedback "counting", I mean that it is summative rather than formative^[I think that this is another way to present the difference between (Bayesian) quadrature and optimisation. In quadrature, all the points are summative, whereas in optimisation only the final point is.].
+That is, at what stage does the feedback have consequences, positive or negative?
+For example, in the case of a scientific paper, we could naively assume the feedback only begins being consequential when the paper is submitted and disseminated more widely^[Actually, it's probably the case that all feedback is consequential here.].
+For a product, it's important that it is improved sufficiently during early testing to be strongly presented at launch, as the (financial) feedback of the consumer base is what "counts".
+By presenting a bad version of an idea, we risk inoculating others against it, making it more difficult to advance in the future.
+Particular ideas may need to be incubated longer than others^[For example it could be irresponsible to present poorly thought-out versions of controversial ideas.] to make sure that the research is more solid.
+
+<!-- * Importance of lowering the social cost of interaction (e.g. liking on social media, bumping into people in hallways) -->
+<!-- * Connection to Finn's blog post -->

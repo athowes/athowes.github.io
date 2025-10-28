@@ -1,0 +1,77 @@
+---
+title: "Advice on doing a PhD"
+description: "Possibly not generalisable, carries no warranty, etc."
+author: "Adam Howes"
+date: "2024-04-01"
+image: "icl.jpeg"
+bibliography: citations.bib
+format:
+  html:
+    toc: true
+    code-copy: true
+---
+
+Law of equal and opposite advice, but nonetheless:
+
+## Finding a supervisor and department
+
+* Care a lot about your supervision team. Likely primary determinant of your PhD success. As such, worth investing effort into making sure it's a good fit
+* One way to ensure a good fit is to do a previous research project (e.g. masters thesis) with the same supervisors
+  * Alternatively, find previous PhD students of potential supervisors. Look at their outcomes. Make efforts to contact them and ask them about their experience
+  * You could also try talking to the supervisor about their PhD students, what the challenges were with their projects, how they supported them through those challenges
+* You want to be in a department which has friendly people doing things that are interesting to you. These people will become your friends and colleagues, and reflect the general ethos and reputation of the department
+* Institutional prestige does also matter, both for access to resources, and for others taking you seriously and/or wanting to hire you
+  * Without objective measures of performance, status markers (departments, journals) are often relied on to judge the quality of work in academia
+
+## Projects
+
+* Consider the skills you would like to have at the end of the PhD and choose projects strategically to allow you to gather those skills
+  * Although it's possible to do work that is useful to the field during a PhD, remember that you are the primary product, not your work
+  * See ["[Terry Tao was on my committee, and he outlined the whole proof of my dissertation problem before I was even done talking]"](https://twitter.com/AAAzzam/status/1735070386792825334) (not that the world has an unlimited supply of Terry Tao's time, but the point stands that senior people are capable of being substantially more productive than you)
+  * That said, if you do want to say in academia, it's going to be important for you to publish (many) projects
+* What work are we (you, your supervisors, your collaborators) well placed to be doing? Which work do we have a moat (sustainable comparative advantage) to be doing?
+  * Think about the expertise that your supervisors have. If you are doing a project far outside their expertise, it is going to be a challenge for you
+  * If you are to carry on a workstream where your supervisors have publications in that area, and are regarded as experts, it's going to make your life easier. For example: in Supervisor et al. (2024) we did such and such, now in Student et al. (2025) we make the following somewhat obvious extension using much of the infrastructure set-up that allowed us to write Supervisor et al. (2024)
+* Worth repeating that you and your supervisor do not have aligned objectives with regard to project risk. For them, you are just one bet in a portfolio, and they can tolerate a project not really working out that well. For you, this is what you will be working on for the next three or four years
+  * There are a range of other misalignments between yourself, your supervisors, and your department. Think about what is best for you and your goals
+  * Of course the extent to which any agents follow blindly their direct incentives varies, but nonetheless this is how the environment is shaped
+* It is often useful to work with post-docs or more junior academics on projects. They will have more time than more senior academics, and will be closer to the coalface (i.e. they are doing the work themselves, not planning or managing others)
+* It can be difficult moving from undergrad (closed, definite answer learning) to PhD research (open-ended, messy, ambiguous)
+  * Learning to navigate this ambiguity is a part of the experience, and the reason why some companies hire PhD graduates
+* It sounds obvious, but you should plan out how the work you're doing leads to outputs (papers, thesis chapters)
+  * Start writing things down and putting them into output formats as soon as you reasonably can. Writing is clarifying, and it's better to edit the output as things change, than to agonise over results. Arguably, it's also good for science that you are somewhat agnostic to the results of your work (see e.g. pre-analysis plan)
+  * Advise I saw due to [Rachael Meager](https://twitter.com/economeager): write the abstract for your paper in a best case scenario. Show it to people. If even then they don't think it sounds like a paper they'd want to read, then you may want to rethink
+
+## Conferences and activities
+
+* Academia has much less scaffolding to structure work around than a regular job. In some sense, you have to create this scaffolding for yourself
+  * The purpose of conferences is to provide checkpoints for you to move work forward and get feedback
+* I have a similar feeling r.e. lab or group meetings: take them for what they are (an opportunity, not a burden)
+  * One benefit of doing PhD is that you should get lots of opportunity to practice presenting material. I recommend the book ["Trees, maps, and theorems"](https://www.principiae.be/X0100.php)
+* In some sense sadly, looking after one's own is an important part of academia. You will see this play out at conferences in terms of who is networking with who, and who is granted particular opportunities
+  * That's not to say that this is necessarily "incorrect" from an market efficiency perspective: it's a very limited information setting
+* In my view, academic conferences are not optimised for people talking to each other and sharing ideas. A primary function of conferences is to allow attendees to put an additional line on their CV via a poster, presentation, invited presentation etc.
+  * I found this jarring after attending conferences where a full day of 1-1 meetings is the norm, with profiles for each attendee giving their interests, what they would like to get out of the conference, and what they can offer to others
+
+## Meetings
+
+* I would recommend keeping track of weekly 1-1 (or 1-many) meetings using a shared online document e.g. Google document
+* If possible, you should aim to get unblocked on small things much faster than one week
+  * If your supervisor isn't responsive over shorter time frames, look to bring in someone else into the project who is e.g. a post-doc
+* I found that for getting feedback from busy people an "Amazon"-style meeting structure works well. Namely: the first part of the meeting (e.g. 30 minutes, for an hour meeting) is dedicated to reading. This ensures that everyone has properly read the work
+  * Another benefit of doing this is that knowing that someone will reading your work on a particular date is motivation to write things down
+* Academics are usually overworked, with too many commitments. As such, you should learn about managing up, which is essentially helping your manager (supervisor) to do their job
+  * See ["How to manage up using these delegation tips"](https://saidtwice.substack.com/p/how-to-manage-up-using-these-delegation)
+  
+## Personal productivity
+
+* I found that a daily "stand-up" document works for me. It is just a Google document where I write what I am going to do that day
+  
+## Your work
+
+* Try not to worry too much about the quality of your work. Do what you can in a reasonable time and move on
+  * [Half-ass it with everything you've got](https://mindingourway.com/half-assing-it-with-everything-youve-got/)
+
+## Upsides
+
+* The above is somewhat cynical, but there are upsides to doing a PhD too: primarily that you have a lot of freedom and slack to pursue something you are interested in

@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 draft/
+/.quarto/
+_posts/
+_site.yml
+*.Rproj

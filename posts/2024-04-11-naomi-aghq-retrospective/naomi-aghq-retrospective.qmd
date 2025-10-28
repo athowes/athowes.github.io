@@ -1,0 +1,47 @@
+---
+title: "Inference for the Naomi model: informal discussion"
+description: "A summary, some potentially useful takeaways, and reflections on Chapter 6 of my PhD thesis"
+author: "Adam Howes"
+date: "2023-06-01"
+bibliography: citations.bib
+format:
+  html:
+    toc: true
+    code-copy: true
+---
+
+# Statistical
+
+## Summary
+
+[Naomi](https://naomi.unaids.org/login) is a small-area estimation model used to produce district-level estimates of HIV indicators.
+The model "synthesises" or "triangulates" data from multiple sources.
+At the end of the day it's just a regression model.
+But a regression model which takes four pages to write out, and may give you a brain aneurysm.
+
+In the @rue2009approximate RSS Discussion paper, Hans Skaug proposes using automatic differentiation to implement a fast, flexible and easy to use approach to INLA.
+
+## Extended latent Gaussian models
+
+## Scaling up the hyperparameter grid
+
+Adaptive Gauss-Hermite quadrature is a smart method for integrating with respect to densities which are close to being Gaussian.
+
+## Comparing inferences
+
+## Statistical software
+
+```{r}
+#| echo: false
+#| eval: false
+tweetrmd::tweet_embed("https://twitter.com/strengejacke/status/1733051326970417260")
+```
+
+# Other
+
+## Personal reflection
+
+Finishing this paper has been a long and winding process.
+I started this project at the beginning of my PhD, and spent a lot of time quite lost.
+I don't think I would have got to the end of it without [Alex Stringer](https://www.alexstringer.ca/), so as well as thanking him, I'd like to thank [Tim Lucas](https://timcdlucas.github.io/) for putting us in touch.
+I think visiting the University of Waterloo in-person last fall was also crucial, so thank you to the department there for being so welcoming, as well as the [StatML CDT](https://statml.io/) for providing funding^[No thanks to you, Kitchener-Waterloo rental market, sorry.].
