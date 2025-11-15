@@ -5,15 +5,7 @@ This is a personal website built with [Distill for R Markdown](https://rstudio.g
 ## Deployment
 
 The website is automatically built and deployed to GitHub Pages using GitHub Actions.
-The workflow is triggered on every push to the `main` branch.
-
-### Setup
-
-To enable GitHub Actions deployment:
-
-1. Go to your repository Settings → Pages
-2. Under "Build and deployment", set the source to **GitHub Actions**
-3. The workflow will automatically deploy the site on the next push to `main`
+The workflow is triggered on every push to the `master` branch.
 
 ### Local Development
 
