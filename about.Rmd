@@ -10,7 +10,7 @@ d-title {
 ```
 
 
-::: {.floatting}
+::: {.floating}
 
 ```{r echo=FALSE, out.width='30%', out.extra='style="float:right; padding:15px"'}
 knitr::include_graphics("headshot.jpeg")
@@ -32,3 +32,5 @@ After my PhD, I worked at the [University of Oxford](https://www.ox.ac.uk/) mode
 
 For anyone in and around London, and interested in chatting statistics or other topics, let me know!
 I also welcome constructive feedback --  feel free to use this anonymous [form](https://forms.gle/VjXVx2JZAoSEMsSi8) if you'd like to share thoughts on how I can improve personally or professionally.
+
+:::
