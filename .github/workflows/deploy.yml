@@ -48,9 +48,11 @@ jobs:
           restore-keys: ${{ runner.os }}-r-4.3.0-
       
       - name: Install R dependencies
-        run: |
-          install.packages(c("rmarkdown", "distill"), repos = "https://cloud.r-project.org/")
-        shell: Rscript {0}
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            rmarkdown
+            distill
       
       - name: Build site
         run: |
