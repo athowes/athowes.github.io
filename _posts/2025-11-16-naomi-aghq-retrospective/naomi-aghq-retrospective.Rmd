@@ -5,8 +5,7 @@ description: |
 author:
   - name: Adam Howes
     url: {}
-date: 2023-06-01
-draft: true
+date: 2025-11-16
 output:
   distill::distill_article:
     toc: true
@@ -21,8 +20,7 @@ bibliography: citations.bib
 
 [Naomi](https://naomi.unaids.org/login) is a small-area estimation model used to produce district-level estimates of HIV indicators.
 The model "synthesises" or "triangulates" data from multiple sources.
-At the end of the day it's just a regression model.
-But a regression model which takes four pages to write out, and may give you a brain aneurysm.
+At the end of the day it's just a regression model (but one which takes a few pages to write out).
 
 In the @rue2009approximate RSS Discussion paper, Hans Skaug proposes using automatic differentiation to implement a fast, flexible and easy to use approach to INLA.
 
