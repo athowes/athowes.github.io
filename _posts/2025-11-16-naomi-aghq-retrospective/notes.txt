@@ -1,0 +1,56 @@
+Inference for a complex model of HIV indicators: informal discussion
+The Paper Background
+* Publication Context: PhD work published in the Journal of Theoretical Biology special edition on biological inference
+* The Naomi Model: A spatial evidence synthesis model used to produce district-level HIV epidemic indicators across sub-Saharan Africa, supporting over 35 countries in generating estimates during annual workshops facilitated by UNAIDS
+* The Problem: Naomi comprises multiple linked generalized linear mixed models with hundreds of parameters and over 20 hyperparameters—more than typical methods like INLA can handle effectively
+* Technical Challenge: The model's scale and complex posterior geometry make MCMC approaches prohibitively slow for interactive use during country workshops, while existing empirical Bayes approaches using TMB don't account for hyperparameter uncertainty
+What the Paper Contributes
+* Novel PCA-AGHQ Method: Developed an extension of adaptive Gauss-Hermite quadrature using principal components analysis to handle integration over many hyperparameters. Making inference feasible for models with 20+ hyperparameters that would otherwise require exponentially many nodes
+* Practical Implementation: Built on existing TMB infrastructure, making the method compatible with any model using TMB templates (including the existing Naomi implementation)
+* Demonstrated Parameter Improvements: In the Malawi case study, showed 26% reduction in root mean square error for latent field posterior means and 70% reduction for posterior standard deviations compared to empirical Bayes
+Limitations of the Paper and Opportunities for Future Work
+Technical Shortcomings and Mixed Results
+* Limited Downstream Impact: While parameter estimation improved significantly, translation to better HIV indicator estimates was more limited. The root cause of what ultimately matters for public health decisions
+* Systematic Inaccuracies Remain: Both our method and empirical Bayes showed substantial errors compared to gold-standard MCMC for key policy-relevant outputs like exceedance probabilities (e.g., determining if districts meet 90% ART coverage targets)
+* Scale-Dependent Coverage Issues: PCA-AGHQ nodes provided good coverage for some hyperparameters but concentrated at the mode for others, particularly affecting parameters on logarithmic vs. logistic scales
+* Implementation Gaps: Software implementation could be significantly stronger and more accessible to practitioners
+Specific Areas for Future Development
+* Quadrature Grid Improvements: Better approaches for allocating computational effort across dimensions, potentially using sensitivity analysis measures like Shapley values rather than simple PCA variance explanation
+* Cross-Scale Integration: Methods to better handle hyperparameters on different scales (logit vs. log) that currently receive unequal treatment in the PCA decomposition
+* Scalability Questions: While the method works for Malawi (30 districts), larger countries with hundreds of districts may still require further approximations
+* Beyond TMB: Exploring implementation in other frameworks like NIMBLE or Stan could provide access to additional algorithmic options
+Connections of the Paper to Current Work on Rt
+Methodological Parallels
+* Current Application: Using mgcv to fit GAMs for effective reproduction number of respiratory infections in US counties
+* Comparative Context: Contrasting with older EpiNow2 model (state-level, MCMC-fitted) reveals similar methodological trade-offs between approximation methods and exact but computationally impractical inference
+* Recurring Themes: The same fundamental tension appears across different disease modeling contexts: balancing theoretical rigor with practical computational constraints
+Future Potential
+* Scaling Challenges: Current mgcv approach works well for single-source data, but integrating multiple evidence sources would require methods beyond mgcv
+* Framework Possibilities: Template Model Builder (TMB) could be a candidate framework for more complex evidence synthesis, making the HIV modeling inference approaches relevant again
+* Cross-Application Learning: Lessons from HIV indicator estimation inform current respiratory disease modeling and vice versa
+Broader Reflections About the Field
+The Models vs. Data Fundamental Tension
+* Sophistication Limits: Evidence synthesis models can be highly sophisticated, but their utility is fundamentally constrained by the quality and availability of underlying data
+* Data Instability: Data inputs (Demographic and Health Surveys) can shift rapidly due to external circumstances, including political instability in regions where monitoring is most critical
+* Resource Allocation Dilemma: This raises a fundamental question: whether to invest in increasingly complex models or prioritize stronger, more consistent data collection infrastructure
+* Beyond Academia: This tension has direct implications for public health organizations such as the CDC, which face similar choices about where to focus limited analytical resources
+Software as the Foundation for Methods Development
+* Methods Enabled by Software: Good software doesn't just implement methods—it enables methodological innovation by making research easier, faster, and more accessible
+* Design Trade-offs: Different software philosophies make different trade-offs—R-INLA's highly specialized approach offers computational power but can present accessibility challenges for broader adoption
+* Software Quality Multiplies Impact: Well-designed, accessible software amplifies methodological contributions by lowering barriers for other researchers to build upon, test, and extend the work
+* Building on Foundations: Software development benefits from building on existing, well-maintained tools, allowing researchers to focus unique effort where genuine value can be added
+* Implementation as Innovation Enabler: Strong software implementation doesn't just disseminate methods—it creates the foundation for future methodological advances by other researchers
+Research Reality and Progress
+* Imperfection as Normal: The paper represents both achievement and imperfection—and recognizing limitations doesn't diminish its value as a meaningful milestone
+* Trade-offs Are Inevitable: Impactful research involves navigating tensions between theoretical elegance and practical utility, between reproducible ideals and implementable reality
+* Incremental Value: Modest advances that connect to ongoing methodological conversations can be more valuable than dramatic but isolated breakthroughs
+* Honest Assessment: Professional constraints limit further development opportunities, but the research direction remains compelling and the lessons learned continue to inform current work
+The Reproducibility Reality Check
+* The Award Paradox: Despite winning a reproducibility award, the work is not fully reproducible in practice—highlighting how recognition can mask underlying challenges
+* Infrastructure Dependencies: Reproducibility requires not just code availability but stable computational environments, package versions, and hardware configurations that proved harder to maintain than anticipated
+* Beyond Good Intentions: Even with deliberate effort and best practices, the gap between reproducibility ideals and implementation reality remains substantial
+* Learning Through Doing: Sometimes the most valuable research outcomes are insights about the research process itself—understanding these challenges firsthand provides crucial perspective for future work
+The Bigger Picture
+* Public Health Impact: Methodological improvements in biological inference ultimately serve public health decision-making, making the connection between academic research and practical application crucial
+* Collaborative Science: The most effective research acknowledges its limitations while contributing meaningfully to larger scientific conversations
+* Learning Through Doing: Sometimes the most valuable outcomes are the insights gained about research process, software development, and the practical challenges of doing rigorous, reproducible work
