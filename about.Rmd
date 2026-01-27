@@ -23,7 +23,7 @@ I work on epidemic forecasting with the CDC's [Center for Forecasting and Outbre
 Currently, I'm working on sub-state modelling of the [time-varying reproduction number](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) using generalized additive models.
 I previously focused on developing and applying [tools](https://github.com/epinowcast/epidist) for estimating epidemiological delay distributions.
 
-I completed my [PhD](https://github.com/athowes/thesis) "Bayesian spatio-temporal methods for small-area estimation of HIV indicators" at [Imperial College London](https://www.imperial.ac.uk/) supervised by [Seth Flaxman](https://sethrf.com/) and [Jeffrey Imai-Eaton](https://www.imperial.ac.uk/people/jeffrey.eaton).
+I completed my [PhD](https://github.com/athowes/thesis) "Bayesian spatio-temporal methods for small-area estimation of HIV indicators" at [Imperial College London](https://www.imperial.ac.uk/) with [Seth Flaxman](https://sethrf.com/) and [Jeffrey Imai-Eaton](https://www.imperial.ac.uk/people/jeffrey.eaton).
 I was part of the [StatML CDT](https://statml.io/), [HIV Inference Group](https://hiv-inference.org/), and [Machine Learning & Global Health Network](https://mlgh.net/).
 I worked on comparing models for area-level spatial correlation, estimating district-level HIV risk group proportions [@howes2023spatio; [SHIPP](https://hivtools.unaids.org/shipp/)], and developing deterministic Bayesian inference methods [@howes2025fast] motivated by the [Naomi](https://naomi.unaids.org/login) small-area evidence synthesis model [@eaton2021naomi; @esra2024improved].
 
