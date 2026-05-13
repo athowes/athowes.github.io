@@ -20,7 +20,7 @@ knitr::include_graphics("headshot.jpeg")
 
 Hi!
 I'm Adam, a Bayesian statistician and data scientist.
-I like working on high impact problems where careful statistical thinking matters.
+I like working on impactful problems where careful statistical thinking matters.
 If you'd like to collaborate or just chat, get in touch.
 
 I work with the [Center for Forecasting and Outbreak Analytics](https://www.cdc.gov/forecast-outbreak-analytics/index.html) at CDC on epidemic surveillance.
