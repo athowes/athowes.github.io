@@ -20,17 +20,14 @@ knitr::include_graphics("headshot.jpeg")
 
 Hi!
 I'm Adam, a Bayesian statistician and data scientist.
-I like working on high impact problems with sparse, noisy, biased, or hard won data, where careful statistical thinking matters.
-
+I like working on high impact problems where careful statistical thinking matters.
 If you'd like to collaborate or just chat, get in touch.
 
-#### Currently
+I work with the [Center for Forecasting and Outbreak Analytics](https://www.cdc.gov/forecast-outbreak-analytics/index.html) at CDC on epidemic surveillance.
+My current focus is on building daily, county-level estimates of the [reproduction number](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) using [GAMs](https://en.wikipedia.org/wiki/Generalized_additive_model).
+Previously, I developed and applied [tools](https://github.com/epinowcast/epidist) for estimating delay distributions.
 
-I work with the CDC's [Center for Forecasting and Outbreak Analytics](https://www.cdc.gov/forecast-outbreak-analytics/index.html) on epidemic forecasting.
-I'm building towards daily, county-level estimates of the [time-varying reproduction number](https://www.cdc.gov/forecast-outbreak-analytics/about/rt-estimates.html) using generalized additive models.
-I previously focused on developing and applying [tools](https://github.com/epinowcast/epidist) for estimating delay distributions.
-
-I also work with [Active Site](https://activesite.bio/) on the design and analysis of studies evaluating real world AI assistance for biological tasks [@hong2026measuring].
+I also support [Active Site](https://activesite.bio/) on the design and analysis of studies evaluating real world AI assistance for biological tasks [e.g. @hong2026measuring].
 
 #### Background
 
