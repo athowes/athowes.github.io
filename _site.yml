@@ -13,7 +13,7 @@ navbar:
     - text: "Guide"
       href: http://athowes.github.io/guide
     - icon: fa fa-envelope
-      href: mailto:ath19@ic.ac.uk
+      href: mailto:adamthowes@gmail.com
     - icon: fa fa-twitter
       href: https://twitter.com/adamhowes
     - icon: fa fa-github
