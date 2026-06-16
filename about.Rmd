@@ -35,6 +35,6 @@ I completed my [PhD](https://github.com/athowes/thesis) "Bayesian spatio-tempora
 I worked on comparing models for area-level spatial correlation, estimating district-level HIV risk group proportions [@howes2023spatio; [SHIPP](https://hivtools.unaids.org/shipp/)], and developing Bayesian inference methods [@howes2025fast].
 
 I've been a visiting researcher at the [MIT Media Lab](https://www.media.mit.edu/groups/sculpting-evolution/overview/) contributing to the [Nucleic Acid Observatory](https://www.naobservatory.org/) project for detecting biological threats, and at the [University of Waterloo](https://uwaterloo.ca/statistics-and-actuarial-science/) working on adaptive quadrature methods.
-After my PhD, I worked at the [University of Oxford](https://www.ox.ac.uk/) modelling food security with the [WFP](https://www.wfp.org/) [@ishida2025realtime], and contributed to an [individual-based model](https://github.com/mrc-ide/helios) supporting [Blueprint Biosecurity](https://blueprintbiosecurity.org/)'s far UVC roadmap.
+After my PhD, I worked at the [University of Oxford](https://www.ox.ac.uk/) modelling food security with the [WFP](https://www.wfp.org/) [@ishida2025realtime], and helped develop an [individual-based model](https://github.com/mrc-ide/helios) for [Blueprint Biosecurity](https://blueprintbiosecurity.org/) to quantify the public health impact of indoor air quality interventions, including far UVC [@howes2026measuring].
 
 :::
