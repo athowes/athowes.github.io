@@ -1,12 +1,12 @@
 ---
 title: "Inference for the Naomi model: informal discussion"
 description: |
-  A summary, some potentially useful takeaways, and reflections on Chapter 6 of my PhD thesis
+  A summary, some potentially useful takeaways, and reflections on the paper "Fast approximate Bayesian inference of HIV indicators using PCA adaptive Gauss-Hermite quadrature"
 author:
   - name: Adam Howes
     url: {}
-date: 2023-06-01
-draft: true
+date: 2025-11-16
+preview: figB.png
 output:
   distill::distill_article:
     toc: true
@@ -15,18 +15,20 @@ output:
 bibliography: citations.bib
 ---
 
-# Statistical
-
-## Summary
+## Background and motivation
 
 [Naomi](https://naomi.unaids.org/login) is a small-area estimation model used to produce district-level estimates of HIV indicators.
 The model "synthesises" or "triangulates" data from multiple sources.
-At the end of the day it's just a regression model.
-But a regression model which takes four pages to write out, and may give you a brain aneurysm.
+To do this, it uses a fairly complex spatio-temporal hierarchical Bayesian model, which requires [quite a few pages]((https://athowes.github.io/thesis/naomi-aghq-appendix.html#naomi-math) to describe.
+
+The model is used to produce estimates by over 35 countries in annual workshops facilitated by UNAIDS.
+For this reason, it's important that the model can be run quickly and reliably, and on standard hardware.
 
 In the @rue2009approximate RSS Discussion paper, Hans Skaug proposes using automatic differentiation to implement a fast, flexible and easy to use approach to INLA.
 
 ## Extended latent Gaussian models
+
+
 
 ## Scaling up the hyperparameter grid
 
